@@ -54,7 +54,7 @@ class LoginPage extends StatelessWidget {
                     style: TextButton.styleFrom(),
                     child: Text("Login"),
                     onPressed: () {
-                      print("You are login");
+                      print("You are logedin");
                     },
                   ),
                 ],

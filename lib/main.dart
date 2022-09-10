@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:dream/pages/home_page.dart';
 import 'package:dream/pages/login_page.dart';
 import 'package:flutter/material.dart';
