@@ -15,15 +15,32 @@ class _LoginPageState extends State<LoginPage> {
   String name = "";
   String password = "";
   bool onChange = false;
+  final _formKey = GlobalKey<FormState>();
+  moveToHome(BuildContext context) async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        onChange = true;
+      });
+      await Future.delayed(Duration(seconds: 1));
+      // ignore: use_build_context_synchronously
+      await Navigator.pushNamed(context, MyRoutes.homeRoute);
+      setState(() {
+        onChange = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      child: SingleChildScrollView(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Catalog App"),
+      ),
+      body: SingleChildScrollView(
         child: Column(
           children: [
             Image.asset(
-              "assets/images/login.png",
+              "assets/images/login_page.png",
               fit: BoxFit.cover,
             ),
             SizedBox(
@@ -41,73 +58,74 @@ class _LoginPageState extends State<LoginPage> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
-              child: Column(
-                children: [
-                  TextFormField(
-                    decoration: InputDecoration(
-                      hintText: "Enter username",
-                      labelText: "Username",
-                    ),
-                    onChanged: (value) {
-                      name = value;
-                      setState(() {});
-                    },
-                  ),
-                  TextFormField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      hintText: "Enter password",
-                      labelText: "Password",
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  InkWell(
-                    onTap: () async {
-                      setState(() {
-                        onChange = true;
-                      });
-                      await Future.delayed(Duration(seconds: 1));
-                      // ignore: use_build_context_synchronously
-                      Navigator.pushNamed(context, MyRoutes.homeRoute);
-                    },
-                    child: AnimatedContainer(
-                      width: onChange ? 65 : 150,
-                      height: onChange ? 65 : 50,
-                      duration: Duration(seconds: 1),
-                      decoration: BoxDecoration(
-                        color: Colors.deepPurple,
-                        borderRadius: BorderRadius.circular(onChange ? 65 : 7),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      decoration: InputDecoration(
+                        hintText: "Enter username",
+                        labelText: "Username",
                       ),
-                      alignment: Alignment.center,
-                      child: onChange
-                          ? Icon(
-                              Icons.done,
-                              color: Colors.white,
-                            )
-                          : Text(
-                              "Login",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                              ),
-                            ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Username can't be empty";
+                        } else {
+                          return null;
+                        }
+                      },
+                      onChanged: (value) {
+                        name = value;
+                        setState(() {});
+                      },
                     ),
-                  )
-                  // ElevatedButton(
-                  //   style: TextButton.styleFrom(
-                  //     minimumSize: Size(130, 40),
-                  //   ),
-                  //   child: Text("Login"),
-                  //   onPressed: () {
-                  //     if (name == "sohag" && password == "sohag") {
-                  //       Navigator.pushNamed(context, MyRoutes.homeRoute);
-                  //     }
-                  //   },
-                  // ),
-                ],
+                    TextFormField(
+                      obscureText: true,
+                      decoration: InputDecoration(
+                        hintText: "Enter password",
+                        labelText: "Password",
+                      ),
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return "Passord can't be empty";
+                        } else if (value.length < 6) {
+                          return "Password length at least 6";
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    Material(
+                      borderRadius: BorderRadius.circular(onChange ? 65 : 7),
+                      color: Colors.deepPurple,
+                      child: InkWell(
+                        onTap: () => moveToHome(context),
+                        child: AnimatedContainer(
+                          width: onChange ? 65 : 150,
+                          height: onChange ? 65 : 50,
+                          duration: Duration(seconds: 1),
+                          alignment: Alignment.center,
+                          child: onChange
+                              ? Icon(
+                                  Icons.done,
+                                  color: Colors.white,
+                                )
+                              : Text(
+                                  "Login",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             )
           ],
