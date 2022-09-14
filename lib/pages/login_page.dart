@@ -36,6 +36,7 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(
         title: Text("Catalog App"),
       ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -57,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
               height: 20,
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: Form(
                 key: _formKey,
                 child: Column(
