@@ -100,13 +100,13 @@ class _LoginPageState extends State<LoginPage> {
                       height: 30,
                     ),
                     Material(
-                      borderRadius: BorderRadius.circular(onChange ? 65 : 7),
+                      borderRadius: BorderRadius.circular(onChange ? 50 : 7),
                       color: Colors.deepPurple,
                       child: InkWell(
                         onTap: () => moveToHome(context),
                         child: AnimatedContainer(
-                          width: onChange ? 65 : 150,
-                          height: onChange ? 65 : 50,
+                          width: onChange ? 50 : 140,
+                          height: onChange ? 50 : 50,
                           duration: Duration(seconds: 1),
                           alignment: Alignment.center,
                           child: onChange
